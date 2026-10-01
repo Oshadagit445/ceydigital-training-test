@@ -83,29 +83,6 @@ create table "user_sessions" (
 constraint "session_pkey" primary key ("sid")
 );
 
-## How Auth State Flows
-
-Browser Vite (dev) Express Postgres
-│ │ │ │
-│ POST /api/auth/login │ │ │
-├───────────────────────────►│ proxy → :4000 │ │
-│ ├──────────────────────►│ │
-│ │ │ SELECT user │
-│ │ ├──────────────────────►│
-│ │ │◄──────────────────────┤
-│ │ │ bcrypt.compare │
-│ │ │ create session row │
-│ │ ├──────────────────────►│
-│ │ Set-Cookie: sid=... │ │
-│◄───────────────────────────┼───────────────────────┤ │
-│ │ │ │
-│ GET /api/auth/me │ │ │
-│ (Cookie: sid=...) │ │ │
-├───────────────────────────►│──────────────────────►│ SELECT session │
-│ │ ├──────────────────────►│
-│ { user: {...} } │ │ │
-│◄───────────────────────────┼───────────────────────┤ │
-
 ## Running Locally Prerequisites
 
 - Node.js 18+
@@ -117,9 +94,13 @@ Browser Vite (dev) Express Postgres
 ## Create backend/.env:
 
 PORT=4000
+
 DATABASE_URL=postgres://postgres:postgres@localhost:5432/mydb
+
 SESSION_SECRET=replace_with_a_long_random_string
+
 NODE_ENV=development
+
 CLIENT_ORIGIN=http://localhost:5173
 
 ## Known Limitations
