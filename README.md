@@ -18,49 +18,6 @@ The app is a small, self-contained authentication system. Users can register, lo
 
 - Page refresh — the frontend calls GET /api/auth/me on mount. If the session is valid, the user is restored; otherwise they are redirected to /login.
 
-## Project Structure
-
-ceydigital-auth/
-├── backend/
-│ ├── src/
-│ │ ├── index.ts # Express app, session, CORS, route mounting
-│ │ ├── db.ts # pg Pool
-│ │ ├── middleware/
-│ │ │ └── requireAuth.ts # rejects unauthenticated requests
-│ │ ├── routes/
-│ │ │ ├── auth.ts # /register, /login, /logout, /me
-│ │ │ └── users.ts # /me, /me/password
-│ │ └── types/
-│ │ └── session.ts # augments express-session with userId
-│ ├── .env
-│ ├── package.json
-│ └── tsconfig.json
-│
-└── frontend/
-├── src/
-│ ├── api/client.ts # apiFetch wrapper (sets credentials: "include")
-│ ├── components/
-│ │ ├── common/PasswordInput.tsx
-│ │ ├── layout/AuthLayout.tsx
-│ │ ├── layout/AppLayout.tsx
-│ │ └── routing/RequireAuth.tsx
-│ ├── context/AuthContext.tsx
-│ ├── features/auth/
-│ │ ├── types.ts
-│ │ └── validation.ts
-│ ├── pages/
-│ │ ├── HomePage.tsx
-│ │ ├── LoginPage.tsx
-│ │ ├── SignupPage.tsx
-│ │ ├── DashboardPage.tsx
-│ │ ├── ProfilePage.tsx
-│ │ ├── SettingsPage.tsx
-│ │ └── NotFoundPage.tsx
-│ ├── App.tsx
-│ └── main.tsx
-├── vite.config.ts # dev proxy: /api → http://localhost:4000
-└── package.json
-
 ## Database Schema
 
 - users — created manually:
